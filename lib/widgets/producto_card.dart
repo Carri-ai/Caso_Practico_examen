@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+
 import '../models/producto.dart';
 
 class ProductoCard extends StatelessWidget {
@@ -12,43 +13,81 @@ class ProductoCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
-      child: Padding(
-        padding: const EdgeInsets.all(12),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Icon(
-              producto.icono,
-              size: 50,
-              color: Colors.pink,
-            ),
-            const SizedBox(height: 10),
-            Text(
-              producto.nombre,
-              textAlign: TextAlign.center,
-              style: const TextStyle(
-                fontWeight: FontWeight.bold,
+      elevation: 3,
+      clipBehavior: Clip.antiAlias,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(18),
+      ),
+      child: Column(
+        children: [
+          Expanded(
+            child: Container(
+              width: double.infinity,
+              decoration: BoxDecoration(
+                color: producto.color.withValues(alpha: 0.12),
+              ),
+              child: Center(
+                child: Container(
+                  padding: const EdgeInsets.all(18),
+                  decoration: BoxDecoration(
+                    color: producto.color.withValues(alpha: 0.15),
+                    shape: BoxShape.circle,
+                  ),
+                  child: Icon(
+                    producto.icono,
+                    size: 55,
+                    color: producto.color,
+                  ),
+                ),
               ),
             ),
-            const SizedBox(height: 6),
-            Text(
-              '\$${producto.precio.toStringAsFixed(2)}',
-            ),
-            const SizedBox(height: 8),
-            ElevatedButton(
-              onPressed: () {
-                ScaffoldMessenger.of(context).showSnackBar(
-                  SnackBar(
-                    content: Text(
-                      '${producto.nombre} agregado',
-                    ),
+          ),
+          Padding(
+            padding: const EdgeInsets.all(12),
+            child: Column(
+              children: [
+                Text(
+                  producto.nombre,
+                  textAlign: TextAlign.center,
+                  style: const TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold,
                   ),
-                );
-              },
-              child: const Text('Agregar'),
+                ),
+                const SizedBox(height: 5),
+                Text(
+                  '\$${producto.precio.toStringAsFixed(2)}',
+                  style: TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.w600,
+                    color: Colors.pink.shade700,
+                  ),
+                ),
+                const SizedBox(height: 8),
+                SizedBox(
+                  width: double.infinity,
+                  child: ElevatedButton.icon(
+                    onPressed: () {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                          content: Text(
+                            '${producto.nombre} agregado correctamente',
+                          ),
+                          duration: const Duration(seconds: 2),
+                        ),
+                      );
+                    },
+                    icon: const Icon(
+                      Icons.shopping_cart_outlined,
+                      size: 18,
+                    ),
+                    label: const Text('Agregar'),
+                  ),
+                ),
+              ],
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
